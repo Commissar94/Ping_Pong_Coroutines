@@ -1,20 +1,27 @@
 import kotlinx.coroutines.*
 
 fun main(): Unit = runBlocking {
-    launch { doPing(5) }
-    launch { doPong(5) }
-}
 
-suspend fun doPing(repeats: Int) {
-    for (i in 0..repeats) {
-        delay(2000L)
-        println("Ping")
+    val doPing = launch {doPing()}
+    val doPong = launch {doPong()}
+    delay(1000L)
+    for (i in 1..10000) {
+        if (doPing.isCompleted) {
+            launch {doPong()}
+        }
+        delay(500L)
+        if (doPong.isCompleted) {
+            launch {doPing()}
+        }
     }
 }
 
-suspend fun doPong(repeats: Int) {
-    for (i in 0..repeats) {
-        delay(2001L)
-        println("Pong")
-    }
+suspend fun doPing() {
+    println("Ping")
+    delay(1000L)
+}
+
+suspend fun doPong() {
+    println("Pong")
+    delay(1000L)
 }
