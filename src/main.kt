@@ -2,8 +2,8 @@ import kotlinx.coroutines.*
 
 fun main(): Unit = runBlocking {
 
-    val doPing = async { Ping() }
-    val doPong = async { Pong() }
+    val doPing = async { ping() }
+    val doPong = async { pong() }
 
 
     launch {
@@ -19,12 +19,12 @@ fun main(): Unit = runBlocking {
     }
 }
 
-suspend fun Ping(): String {
+suspend fun ping(): String {
     delay(1000)
     return "Ping"
 }
 
-suspend fun Pong(): String {
+suspend fun pong(): String {
     delay(1000)
     return "Pong"
 }
